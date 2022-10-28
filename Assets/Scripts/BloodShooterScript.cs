@@ -32,4 +32,12 @@ public class BloodShooterScript : MonoBehaviour
         }
         _bulletCounter += Time.deltaTime;
     }
+     void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Enemy")
+        {
+            col.gameObject.GetComponent<EnemyMovementScript>().StopMovement();
+        }
+    }
+    
 }

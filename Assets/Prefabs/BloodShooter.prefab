@@ -42,9 +42,11 @@ GameObject:
   - component: {fileID: 7756363036705428971}
   - component: {fileID: 7756363036705428964}
   - component: {fileID: 7756363036705428970}
+  - component: {fileID: 6386730014185932940}
+  - component: {fileID: 2770114693536378639}
   m_Layer: 0
   m_Name: BloodShooter
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,5 +133,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bloodBullet: {fileID: 9051593496403100830, guid: a9fc7deb703e92a4dbc244f29269aab6, type: 3}
   _bulletSpawn: {fileID: 7756363036278366543}
-  _timebetweenBullets: 2
-  _moveSpeed: 5
+  _timebetweenBullets: 3.5
+  _moveSpeed: 2
+--- !u!114 &6386730014185932940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7756363036705428965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e9ba2742fd7b847a892cec63e087f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
+--- !u!61 &2770114693536378639
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7756363036705428965}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.086164534, y: 0.0063976645}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.1723288, y: 0.34103185}
+  m_EdgeRadius: 0

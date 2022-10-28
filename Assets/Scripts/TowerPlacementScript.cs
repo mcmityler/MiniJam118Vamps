@@ -94,7 +94,8 @@ public class TowerPlacementScript : MonoBehaviour
         _highlighted = false;
         _turretPlaced = true;
         //Get Tower from tower selections cript and set to null
-        Instantiate(_selectedTowerType, _turretSpawnPoint.position, Quaternion.identity);
+        GameObject m_tower = Instantiate(_selectedTowerType, _turretSpawnPoint.position, Quaternion.identity);
+        m_tower.GetComponent<TowerHealthScript>().SetSlot(this.gameObject);
         this.gameObject.GetComponent<SpriteRenderer>().sprite = _unselectedSprite;
         _towerSelectionScript.SelectTower(-1); //reset selection to null;
     }

@@ -8,7 +8,7 @@ public class VampireBasic : MonoBehaviour
 {
 
     [SerializeField] int _vampireHealth = 3;
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "BloodBullet"){
             Destroy(col.gameObject);

@@ -7,6 +7,8 @@ public class EnemyHealthScript : MonoBehaviour
     [SerializeField] int _vampireHealth = 3;
     [SerializeField] int _fangValue = 1;
     [SerializeField] GameObject _fangPickup;
+    [SerializeField] AudioSource _VampireHit;
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "BloodBullet")
@@ -17,12 +19,17 @@ public class EnemyHealthScript : MonoBehaviour
             {
                 SpawnFangPickup();
                 Destroy(this.gameObject);
+                return;
+            }
+            if (FindObjectOfType<AudioManager>().GetSoundMuted() == false) //make sure game isnt muted
+            {
+                _VampireHit.Play();
             }
         }
     }
     void SpawnFangPickup()
     {
-       GameObject m_fang =  Instantiate(_fangPickup, gameObject.transform.position, Quaternion.identity);
-    m_fang.GetComponent<FangScript>().SetFangValue(_fangValue);
+        GameObject m_fang = Instantiate(_fangPickup, gameObject.transform.position, Quaternion.identity);
+        m_fang.GetComponent<FangScript>().SetFangValue(_fangValue);
     }
 }

@@ -17,6 +17,7 @@ public class TowerHealthScript : MonoBehaviour
         _health -= m_damageRecieved;
         if (_health <= 0)
         {
+            _slotPlacedIn.GetComponent<TowerPlacementScript>().TowerDestoryed();
             Destroy(this.gameObject);
         }
     }

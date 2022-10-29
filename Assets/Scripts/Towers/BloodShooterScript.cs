@@ -28,6 +28,7 @@ public class BloodShooterScript : MonoBehaviour
             _bulletCounter = 0;
             GameObject m_bullet = Instantiate(_bloodBullet, _bulletSpawn.position, Quaternion.identity);
             m_bullet.GetComponent<BloodBulletScript>().SetSpeed(_moveSpeed);
+
         }
         _bulletCounter += Time.deltaTime;
     }

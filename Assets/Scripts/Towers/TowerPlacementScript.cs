@@ -20,7 +20,7 @@ public class TowerPlacementScript : MonoBehaviour
     [SerializeField] Color _selectedColour = Color.white;
 
     bool _highlighted = false;
-    bool _turretPlaced = false;
+    bool _towerPlaced = false;
     SettingScript _settingScript;
     DisplayTextScript _displayText;
 
@@ -34,10 +34,7 @@ public class TowerPlacementScript : MonoBehaviour
     }
     void OnMouseEnter()
     {
-        if (_turretPlaced == false)
-        {
-            HighlightSlot();
-        }
+        HighlightSlot();
 
     }
     void OnMouseExit()
@@ -54,9 +51,14 @@ public class TowerPlacementScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (_highlighted && _turretPlaced == false) //make sure its highlighted, you havent already placed a turret there
+            if (_highlighted && _towerPlaced == false) //make sure its highlighted, you havent already placed a turret there
             {
                 PlaceTower();
+
+            }
+            if (_highlighted && _towerPlaced == true) //make sure its highlighted and you placed turret there already
+            {
+                Debug.Log("Upgrade Tower");
 
             }
         }
@@ -68,17 +70,23 @@ public class TowerPlacementScript : MonoBehaviour
         this.gameObject.GetComponent<SpriteRenderer>().sprite = _selectedSprite;
         _highlighted = true;
         _selectedTowerType = _towerSelectionScript.GetTower();
-        if (_selectedTowerType == null)
+        if (_selectedTowerType == null && _towerPlaced == false)
         {
             this.gameObject.GetComponent<SpriteRenderer>().sprite = _selectedSprite;
 
             this.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         }
-        else
+        else if (_towerPlaced == false)
         {
             this.gameObject.GetComponent<SpriteRenderer>().sprite = _selectedTowerType.GetComponent<SpriteRenderer>().sprite;
 
             this.gameObject.GetComponent<SpriteRenderer>().color = _selectedColour;
+        }
+        else if (_towerPlaced == true) //if you wanted to upgrade the towers 
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = _selectedSprite;
+
+            this.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
 
     }
@@ -92,7 +100,7 @@ public class TowerPlacementScript : MonoBehaviour
     }
     public void PlaceTower()
     {
-        if (_settingScript.GetPaused() == false) //only allow to place towers if you arent paused
+        if (_settingScript.GetPaused() == false) //only allow to place towers if you arent paused (because you can click through panel for some reason)
         {
             if (_selectedTowerType == null) //what to do if no tower is selected
             {
@@ -104,14 +112,22 @@ public class TowerPlacementScript : MonoBehaviour
             }
 
             _highlighted = false;
-            _turretPlaced = true;
+            _towerPlaced = true;
             //Get Tower from tower selections cript and set to null
             GameObject m_tower = Instantiate(_selectedTowerType, _turretSpawnPoint.position, Quaternion.identity);
             m_tower.GetComponent<TowerHealthScript>().SetSlot(this.gameObject);
             this.gameObject.GetComponent<SpriteRenderer>().sprite = _unselectedSprite;
             _towerSelectionScript.SelectTower(-1); //reset selection to null;
-            FindObjectOfType<AudioManager>().Play("ButtonClick");
+            FindObjectOfType<AudioManager>().Play("PlaceTower");
+
+            if(_selectedTowerType.name == "BloodShooter"){
+                _towerSelectionScript.RemoveFangs(5);
+            }
 
         }
+    }
+    public void TowerDestoryed()
+    {
+        _towerPlaced = false;
     }
 }

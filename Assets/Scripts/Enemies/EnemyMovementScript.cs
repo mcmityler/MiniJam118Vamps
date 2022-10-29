@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovementScript : MonoBehaviour
 {
-    private float _moveSpeed = 1f; //how fast vampire moves
+    [SerializeField] private float _moveSpeed = 1f; //how fast vampire moves
     [SerializeField] Vector3 _moveDirection = new Vector3(-1, 0, 0); //direction for the bullet to travel
     bool _stopMovement = false;
     int _damageAmount = 1;

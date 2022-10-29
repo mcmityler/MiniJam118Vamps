@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7756363036278366543}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7756363036705428970}
   - component: {fileID: 6386730014185932940}
   - component: {fileID: 2770114693536378639}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BloodShooter
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bloodBullet: {fileID: 9051593496403100830, guid: a9fc7deb703e92a4dbc244f29269aab6, type: 3}
   _bulletSpawn: {fileID: 7756363036278366543}
-  _timebetweenBullets: 3.5
+  _timebetweenBullets: 2
   _moveSpeed: 2
 --- !u!114 &6386730014185932940
 MonoBehaviour:

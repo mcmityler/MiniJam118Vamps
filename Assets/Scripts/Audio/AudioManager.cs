@@ -57,6 +57,16 @@ public class AudioManager : MonoBehaviour
     {
         _soundMuted = !_soundMuted;
     }
+    public void ToggleSoundButton(GameObject m_buttonPressed)
+    {
+        _soundMuted = !_soundMuted;
+        if(_soundMuted == true){
+            m_buttonPressed.GetComponent<Image>().color = Color.red;
+        }else{
+            m_buttonPressed.GetComponent<Image>().color = Color.white;
+
+        }
+    }
     public void ToggleBackgroundMusic()
     {
         _musicMuted = !_musicMuted;

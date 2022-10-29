@@ -21,9 +21,16 @@ public class TowerPlacementScript : MonoBehaviour
 
     bool _highlighted = false;
     bool _turretPlaced = false;
+    SettingScript _settingScript;
+    DisplayTextScript _displayText;
+
     void Start()
     {
         _towerSelectionScript = GameObject.Find("GameplayManager").gameObject.GetComponent<TowerSelectionScript>();
+
+        _settingScript = GameObject.Find("SettingsManager").GetComponent<SettingScript>();
+        _displayText = GameObject.Find("DisplayText").GetComponent<DisplayTextScript>();
+
     }
     void OnMouseEnter()
     {
@@ -47,7 +54,7 @@ public class TowerPlacementScript : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (_highlighted && _turretPlaced == false)
+            if (_highlighted && _turretPlaced == false) //make sure its highlighted, you havent already placed a turret there
             {
                 PlaceTower();
 
@@ -78,25 +85,33 @@ public class TowerPlacementScript : MonoBehaviour
     public void UnhighlightSlot()
     {
         this.gameObject.GetComponent<SpriteRenderer>().sprite = _unselectedSprite;
-            this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
-        
+        this.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+
         _highlighted = false;
 
     }
     public void PlaceTower()
     {
-
-        if (_selectedTowerType == null) //what to do if no tower is selected
+        if (_settingScript.GetPaused() == false) //only allow to place towers if you arent paused
         {
-            Debug.Log("no tower selected");
-            return;
+            if (_selectedTowerType == null) //what to do if no tower is selected
+            {
+                Debug.Log("no tower selected");
+                FindObjectOfType<AudioManager>().Play("CantPlace");
+                _displayText.SetMessage("No Tower Selected");
+
+                return;
+            }
+
+            _highlighted = false;
+            _turretPlaced = true;
+            //Get Tower from tower selections cript and set to null
+            GameObject m_tower = Instantiate(_selectedTowerType, _turretSpawnPoint.position, Quaternion.identity);
+            m_tower.GetComponent<TowerHealthScript>().SetSlot(this.gameObject);
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = _unselectedSprite;
+            _towerSelectionScript.SelectTower(-1); //reset selection to null;
+            FindObjectOfType<AudioManager>().Play("ButtonClick");
+
         }
-        _highlighted = false;
-        _turretPlaced = true;
-        //Get Tower from tower selections cript and set to null
-        GameObject m_tower = Instantiate(_selectedTowerType, _turretSpawnPoint.position, Quaternion.identity);
-        m_tower.GetComponent<TowerHealthScript>().SetSlot(this.gameObject);
-        this.gameObject.GetComponent<SpriteRenderer>().sprite = _unselectedSprite;
-        _towerSelectionScript.SelectTower(-1); //reset selection to null;
     }
 }

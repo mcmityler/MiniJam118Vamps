@@ -26,7 +26,6 @@ public class BloodShooterScript : MonoBehaviour
         if (_bulletCounter >= _timebetweenBullets)
         {
             _bulletCounter = 0;
-            Debug.Log("shoot bullet out");
             GameObject m_bullet = Instantiate(_bloodBullet, _bulletSpawn.position, Quaternion.identity);
             m_bullet.GetComponent<BloodBulletScript>().SetSpeed(_moveSpeed);
         }

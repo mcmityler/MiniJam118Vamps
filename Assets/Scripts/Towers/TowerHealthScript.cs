@@ -14,7 +14,6 @@ public class TowerHealthScript : MonoBehaviour
     }
     public void DamageTower(int m_damageRecieved)
     {
-        Debug.Log("damage tower");
         _health -= m_damageRecieved;
         if (_health <= 0)
         {

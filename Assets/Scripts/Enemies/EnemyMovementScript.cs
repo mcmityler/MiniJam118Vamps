@@ -21,7 +21,6 @@ public class EnemyMovementScript : MonoBehaviour
         }
         if(_inTowerRange){
             _attackCounter += Time.deltaTime;
-            Debug.Log(_attackCounter);
             if (_attackCounter >= _TimeToAttack)
             {
                 _attackCounter = 0;

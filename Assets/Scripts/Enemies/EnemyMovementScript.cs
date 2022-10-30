@@ -7,11 +7,12 @@ public class EnemyMovementScript : MonoBehaviour
     [SerializeField] private float _moveSpeed = 1f; //how fast vampire moves
     [SerializeField] Vector3 _moveDirection = new Vector3(-1, 0, 0); //direction for the bullet to travel
     bool _stopMovement = false;
-    [SerializeField]int _damageAmount = 1;
+    [SerializeField] int _damageAmount = 1;
     [SerializeField] float _TimeToAttack = 0.1f; //every 0.1 seconds of being within tower range inflict _damageAmount ^^ hp of damage to the tower
     float _attackCounter = 0;
     bool _inTowerRange = false;
-    GameObject _towerInRange;
+    List<GameObject> _towersInRange = new List<GameObject>();
+    [SerializeField] Animator _vampireAnimator;
     void Update()
     {
         if (_stopMovement == false)
@@ -25,13 +26,32 @@ public class EnemyMovementScript : MonoBehaviour
             if (_attackCounter >= _TimeToAttack)
             {
                 _attackCounter = 0;
-                _towerInRange.GetComponent<TowerHealthScript>().DamageTower(_damageAmount);
+                List<GameObject> m_towerInRange = new List<GameObject>(_towersInRange);
+                foreach (var _tower in m_towerInRange)
+                {
+                    _tower.GetComponent<TowerHealthScript>().DamageTower(_damageAmount);
+                }
+                if (_vampireAnimator != null)
+                {
+                    _vampireAnimator.SetTrigger("Attack");
 
+                }
 
             }
         }
+        if (_towersInRange.Count == 0)
+        {
+            _attackCounter = 0;
+            _inTowerRange = false;
+            ResumeMovement();
+        }
+        else
+        {
+            StopMovement();
+        }
     }
-    public void SetSpeed(float m_speed){
+    public void SetSpeed(float m_speed)
+    {
         _moveSpeed = m_speed;
     }
     public void SwitchYDirection() //switch y direction (used for bat enemy)
@@ -50,7 +70,7 @@ public class EnemyMovementScript : MonoBehaviour
     {
         if (col.gameObject.tag == "Tower")
         {
-            _towerInRange = col.gameObject;
+            _towersInRange.Add(col.gameObject);
             _inTowerRange = true;
 
         }
@@ -59,10 +79,7 @@ public class EnemyMovementScript : MonoBehaviour
     {
         if (col.gameObject.tag == "Tower")
         {
-            _attackCounter = 0;
-            _inTowerRange = false;
-            ResumeMovement();
-
+            _towersInRange.Remove(col.gameObject);
         }
     }
 }

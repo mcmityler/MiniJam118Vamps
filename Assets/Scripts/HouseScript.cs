@@ -10,8 +10,14 @@ public class HouseScript : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy")
         {
-            Destroy(col.gameObject);
             _healthScript.RemoveHealth(_damageAmount);
+            Destroy(col.gameObject);
+
+        }
+        if (col.gameObject.tag == "Dracula")
+        {
+            _healthScript.RemoveHealth(3);
+            //Destroy(col.gameObject);
         }
     }
 }

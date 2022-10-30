@@ -13,6 +13,8 @@ public class WaveScript : MonoBehaviour
     [SerializeField] private GameObject _basicEnemy;
     [SerializeField] private GameObject _batEnemy;
     [SerializeField] private GameObject _tankEnemy;
+    [SerializeField] private GameObject _dracula;
+
 
 
     [SerializeField] private DisplayTextScript _displayText;
@@ -23,6 +25,9 @@ public class WaveScript : MonoBehaviour
     private List<GameObject> _wave5;
 
 
+    [SerializeField] private DraculaHealthBarScript _draculaHealthbar;
+    [SerializeField] private GameObject _restartButton;
+    [SerializeField] private GameObject _storyPanel;
 
 
 
@@ -30,7 +35,8 @@ public class WaveScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartWaves();
+        //StartWaves();
+        _storyPanel.SetActive(true);
     }
 
     // Update is called once per frame
@@ -52,6 +58,7 @@ public class WaveScript : MonoBehaviour
         RefillWaves();
         _waveNum = 1;
         _displayText.SetMessage("WAVE 1");
+        _storyPanel.SetActive(false);
     }
     void SpawnWave()
     {
@@ -132,9 +139,24 @@ public class WaveScript : MonoBehaviour
             //SPAWN LAST WAVE + DRACULA GIANT
             if (_wave5.Count == 0)
             {
-                Debug.Log ("DRACULA");
+                Debug.Log("DRACULA");
+                _displayText.SetMessage("BOSS WAVE");
+                GameObject m_dracula = Instantiate(_dracula, _enemySpawnPoints[3].position, Quaternion.identity);
+                _draculaHealthbar.DraculaSpawned(); //make health bar appear
+                _waveNum = 6; //so it doesnt keep spawning draculas
+                return;
             }
+
             //spawn waves before dracula
+            _spawnTime = 0.1f;
+            int _randomEnemyNum = Random.Range(0, _wave5.Count);
+            GameObject m_vamp = Instantiate(_wave5[_randomEnemyNum], _enemySpawnPoints[_chosenSpawnPointNum].position, Quaternion.identity);
+            m_vamp.GetComponent<EnemyMovementScript>().SetSpeed(1f);
+            _wave5.RemoveAt(_randomEnemyNum);
+            if (_wave5.Count == 1)
+            {
+                 _spawnTime = 9f;
+            }
         }
     }
     void SpawnBasicEnemy()
@@ -153,13 +175,19 @@ public class WaveScript : MonoBehaviour
         _wave2 = new List<GameObject>() { _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _batEnemy };
         _wave3 = new List<GameObject>() { _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _tankEnemy, _tankEnemy, _batEnemy, _batEnemy, _batEnemy, _batEnemy };
         _wave4 = new List<GameObject>() { _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _batEnemy, _batEnemy, _batEnemy, _batEnemy, _batEnemy, _batEnemy, _batEnemy, _batEnemy };
-        _wave5 = new List<GameObject>() {  };
-    
+        _wave5 = new List<GameObject>() { _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _tankEnemy, _basicEnemy, _basicEnemy, _basicEnemy, _basicEnemy };
+
     }
 
     public void RestartGame()
     {
         foreach (GameObject item in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(item);
+        }
+        _draculaHealthbar.ResetDraculaBar(); //reset dracula bar before despawning dracula so it doesnt think you won the game
+
+        foreach (GameObject item in GameObject.FindGameObjectsWithTag("Dracula"))
         {
             Destroy(item);
         }
@@ -188,7 +216,12 @@ public class WaveScript : MonoBehaviour
             fence.gameObject.SetActive(true);
         }
         _waveNum = 0;
+        _counter = 0;
         GameObject.FindObjectOfType<TowerSelectionScript>().ResetFangs(11);
+        gameObject.GetComponent<HealthScript>().Reset();
+        _displayText.SetMessage("");
+        _restartButton.SetActive(false);
         Time.timeScale = 1;
+        StartWaves();
     }
 }

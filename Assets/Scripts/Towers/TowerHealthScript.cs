@@ -16,32 +16,35 @@ public class TowerHealthScript : MonoBehaviour
     public void DamageTower(int m_damageRecieved)
     {
         _health -= m_damageRecieved;
+
         if (_health <= 0)
         {
             if (_isFence == false) //set slot empty if its not a fence
             {
                 _slotPlacedIn.GetComponent<TowerPlacementScript>().TowerDestoryed();
-                Debug.Log("make tower destroy noise");
+                FindObjectOfType<AudioManager>().Play("TowerDead");
             }
             else
             {
-                Debug.Log("make fence destroy sound");
+                FindObjectOfType<AudioManager>().Play("FenceDead");
+
                 this.gameObject.SetActive(false); //set fence invisible instead of deleting for easy reset;
                 return;
             }
             Destroy(this.gameObject);
             return;
         }
+        if (_isFence == false)//make damage sound depending on whats being hit
+        {
+            FindObjectOfType<AudioManager>().Play("TowerDamage");
+
+        }else{
+            FindObjectOfType<AudioManager>().Play("FenceDamage");
+        }
         Debug.Log("Make tower damage noise");
     }
-    public void SetHealth(int m_healthAdded){
-        _health = m_healthAdded;
-    }
-    void OnTriggerEnter2D(Collider2D col)
+    public void SetHealth(int m_healthAdded)
     {
-        if (col.gameObject.tag == "Enemy")
-        {
-            col.gameObject.GetComponent<EnemyMovementScript>().StopMovement();
-        }
+        _health = m_healthAdded;
     }
 }

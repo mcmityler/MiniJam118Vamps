@@ -29,6 +29,12 @@ public class TowerSelectionScript : MonoBehaviour
         if (m_buttonPressed == -1)
         {
             _selectedTower = null; //reset selected 
+            _towerButtons[lastButtonNum].GetComponent<Image>().color = Color.white;
+            //make sure that the normal colour is solid to show clear
+            Button b2 = _towerButtons[lastButtonNum].GetComponent<Button>();
+            ColorBlock cb2 = b2.colors;
+            cb2.normalColor = Color.clear;
+            b2.colors = cb2;
             return;
         }
         if (_towerButtons[m_buttonPressed].GetComponent<Image>().color != Color.red)
@@ -107,38 +113,42 @@ public class TowerSelectionScript : MonoBehaviour
         else if (_amountOfFangs >= 5)
         {
             // ************ BLOOD SHOOTER *************************
-
-            _towerButtons[0].GetComponent<Image>().color = Color.white;
-            //make sure that the normal colour is clear
-            Button b = _towerButtons[0].GetComponent<Button>();
-            ColorBlock cb = b.colors;
-            cb.normalColor = Color.clear;
-            b.colors = cb;
-
+            if (_towerButtons[0].GetComponent<Image>().color != Color.green) //only update price colour if its not selected
+            {
+                _towerButtons[0].GetComponent<Image>().color = Color.white;
+                //make sure that the normal colour is clear
+                Button b = _towerButtons[0].GetComponent<Button>();
+                ColorBlock cb = b.colors;
+                cb.normalColor = Color.clear;
+                b.colors = cb;
+            }
             // ************ OTHER TOWERS*************************
 
         }
         if (_amountOfFangs < 12)
         {
             // ************ BLOOD BLOCKER *************************
+
             _towerButtons[1].GetComponent<Image>().color = Color.red;
             Button b = _towerButtons[1].GetComponent<Button>(); //make red visible even when not selected
             ColorBlock cb = b.colors;
             cb.normalColor = Color.white;
             b.colors = cb;
 
+
         }
         else if (_amountOfFangs >= 12)
         {
             // ************ BLOOD BLOCKER *************************
-
-            _towerButtons[1].GetComponent<Image>().color = Color.white;
-            //make sure that the normal colour is clear
-            Button b = _towerButtons[1].GetComponent<Button>();
-            ColorBlock cb = b.colors;
-            cb.normalColor = Color.clear;
-            b.colors = cb;
-
+            if (_towerButtons[1].GetComponent<Image>().color != Color.green) //only update price colour if its not selected
+            {
+                _towerButtons[1].GetComponent<Image>().color = Color.white;
+                //make sure that the normal colour is clear
+                Button b = _towerButtons[1].GetComponent<Button>();
+                ColorBlock cb = b.colors;
+                cb.normalColor = Color.clear;
+                b.colors = cb;
+            }
             // ************ OTHER TOWERS*************************
 
         }

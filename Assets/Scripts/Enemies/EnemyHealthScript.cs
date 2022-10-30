@@ -8,11 +8,19 @@ public class EnemyHealthScript : MonoBehaviour
     [SerializeField] int _fangValue = 1;
     [SerializeField] GameObject _fangPickup;
     [SerializeField] AudioSource _VampireHit;
+    [SerializeField] ParticleSystem _bloodSplat;
 
+
+
+    public int GetHealth(){
+        return _vampireHealth;
+    }
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "BloodBullet")
         {
+            Instantiate(_bloodSplat, col.gameObject.transform.position, Quaternion.identity);
+
             Destroy(col.gameObject);
             _vampireHealth--;
             if (_vampireHealth <= 0)

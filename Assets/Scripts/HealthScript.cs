@@ -9,6 +9,8 @@ public class HealthScript : MonoBehaviour
     [SerializeField] TMP_Text _healthText;
     DisplayTextScript _displayText;
    [SerializeField] CameraShake _cameraShake;
+    [SerializeField] private GameObject _restartButton;
+
     void Awake()
     {
         _displayText = GameObject.Find("DisplayText").GetComponent<DisplayTextScript>();
@@ -16,6 +18,7 @@ public class HealthScript : MonoBehaviour
     }
     public void RemoveHealth(int m_decrementAmount)
     {
+        FindObjectOfType<AudioManager>().Play("LabHit");
         _health -= m_decrementAmount;
         if (_health <= 0)
         {
@@ -35,6 +38,16 @@ public class HealthScript : MonoBehaviour
     void GameOver()
     {
         _displayText.SetMessage("Game Over!!");
+        FindObjectOfType<AudioManager>().Play("GameOver");
+
+        _healthText.text = _health.ToString();
+                _restartButton.SetActive(true);
+
         Time.timeScale = 0;
+    }
+    public void Reset(){
+        _health = 3;
+        _healthText.text = _health.ToString();
+
     }
 }

@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 15
+  m_SortingOrder: 1000
   m_Sprite: {fileID: 21300000, guid: 92d5bee0648f2b94eaa0450af70cd285, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,7 +100,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.017003402, y: 0.1677669}
+  m_Offset: {x: -0.017003417, y: 0.13843924}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -111,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9161166, y: 0.31986398}
+  m_Size: {x: 0.9161166, y: 0.803265}
   m_EdgeRadius: 0
 --- !u!114 &-5527385322644706183
 MonoBehaviour:
@@ -135,7 +135,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 139ba640e109d14439b44a972fe5501d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 2a807ef502217cd44870b8383217827e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

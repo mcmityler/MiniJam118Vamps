@@ -6,10 +6,12 @@ using UnityEngine;
 
 public class BulletWallScript : MonoBehaviour
 {
-     void OnCollisionEnter2D(Collision2D col) //destroy any bullets that get past the vampires
+     void OnTriggerEnter2D(Collider2D col) //destroy any bullets that get past the vampires
     {
+        Debug.Log(col.gameObject.name);
         if(col.gameObject.tag == "BloodBullet"){
             Destroy(col.gameObject);
+            Debug.Log("destroyed object");
         }
     }
 }

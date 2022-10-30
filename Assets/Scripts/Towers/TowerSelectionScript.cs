@@ -14,7 +14,7 @@ public class TowerSelectionScript : MonoBehaviour
     int lastButtonNum = -1;
 
     [SerializeField] DisplayTextScript _displayTextScript;
-    private int _amountOfFangs = 10;
+    [SerializeField] private int _amountOfFangs = 100;
 
     void Awake()
     {
@@ -36,6 +36,13 @@ public class TowerSelectionScript : MonoBehaviour
             if (m_buttonPressed == lastButtonNum && _towerButtons[m_buttonPressed].GetComponent<Image>().color == Color.green) //same tower pressed twice so unselect it & make sure it was selected / green
             {
                 _towerButtons[m_buttonPressed].GetComponent<Image>().color = Color.white;
+
+                //make sure that the normal colour is clear
+                Button b = _towerButtons[m_buttonPressed].GetComponent<Button>();
+                ColorBlock cb = b.colors;
+                cb.normalColor = Color.clear;
+                b.colors = cb;
+
                 _selectedTower = null;
                 lastButtonNum = -1;
 
@@ -46,8 +53,19 @@ public class TowerSelectionScript : MonoBehaviour
                 if (lastButtonNum != -1)
                 {
                     _towerButtons[lastButtonNum].GetComponent<Image>().color = Color.white;
+                    //make sure that the normal colour is solid to show clear
+                    Button b2 = _towerButtons[m_buttonPressed].GetComponent<Button>();
+                    ColorBlock cb2 = b2.colors;
+                    cb2.normalColor = Color.clear;
+                    b2.colors = cb2;
                 }
                 _towerButtons[m_buttonPressed].GetComponent<Image>().color = Color.green;
+                //make sure that the normal colour is solid to show green
+                Button b = _towerButtons[m_buttonPressed].GetComponent<Button>();
+                ColorBlock cb = b.colors;
+                cb.normalColor = Color.white;
+                b.colors = cb;
+
                 lastButtonNum = m_buttonPressed;
 
             }
@@ -55,9 +73,9 @@ public class TowerSelectionScript : MonoBehaviour
         }
         else //button is red and unselectable
         {
-            Debug.Log ("Cant Afford");
+            Debug.Log("Cant Afford");
             _displayTextScript.SetMessage("Can't Afford Tower");
-            FindObjectOfType<AudioManager>().Play("CantPlace"); 
+            FindObjectOfType<AudioManager>().Play("CantPlace");
         }
 
 
@@ -76,11 +94,53 @@ public class TowerSelectionScript : MonoBehaviour
     {
         if (_amountOfFangs < 5)
         {
+            // ************ BLOOD SHOOTER *************************
             _towerButtons[0].GetComponent<Image>().color = Color.red;
+            Button b = _towerButtons[0].GetComponent<Button>(); //make red visible even when not selected
+            ColorBlock cb = b.colors;
+            cb.normalColor = Color.white;
+            b.colors = cb;
+
+            // ************ OTHER TOWERS*************************
+
         }
-        if (_amountOfFangs >= 5)
+        else if (_amountOfFangs >= 5)
         {
+            // ************ BLOOD SHOOTER *************************
+
             _towerButtons[0].GetComponent<Image>().color = Color.white;
+            //make sure that the normal colour is clear
+            Button b = _towerButtons[0].GetComponent<Button>();
+            ColorBlock cb = b.colors;
+            cb.normalColor = Color.clear;
+            b.colors = cb;
+
+            // ************ OTHER TOWERS*************************
+
+        }
+        if (_amountOfFangs < 12)
+        {
+            // ************ BLOOD BLOCKER *************************
+            _towerButtons[1].GetComponent<Image>().color = Color.red;
+            Button b = _towerButtons[1].GetComponent<Button>(); //make red visible even when not selected
+            ColorBlock cb = b.colors;
+            cb.normalColor = Color.white;
+            b.colors = cb;
+
+        }
+        else if (_amountOfFangs >= 12)
+        {
+            // ************ BLOOD BLOCKER *************************
+
+            _towerButtons[1].GetComponent<Image>().color = Color.white;
+            //make sure that the normal colour is clear
+            Button b = _towerButtons[1].GetComponent<Button>();
+            ColorBlock cb = b.colors;
+            cb.normalColor = Color.clear;
+            b.colors = cb;
+
+            // ************ OTHER TOWERS*************************
+
         }
     }
 
@@ -100,6 +160,12 @@ public class TowerSelectionScript : MonoBehaviour
         _selectedTower = null; //purchased tower so unselect it
         lastButtonNum = -1; //reset last button pressed too because you placed and used it
 
+    }
+    public void ResetFangs(int m_fangs)
+    {
+        _amountOfFangs = m_fangs;
+        _fangAmountText.text = _amountOfFangs.ToString(); //update fang amount
+        EvaluatePrices();
     }
 
 }

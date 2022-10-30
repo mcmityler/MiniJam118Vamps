@@ -123,6 +123,9 @@ public class TowerPlacementScript : MonoBehaviour
             if(_selectedTowerType.name == "BloodShooter"){
                 _towerSelectionScript.RemoveFangs(5);
             }
+            if(_selectedTowerType.name == "BloodBagBlocker"){
+                _towerSelectionScript.RemoveFangs(12);
+            }
 
         }
     }

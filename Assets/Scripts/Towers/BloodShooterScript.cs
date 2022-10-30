@@ -11,10 +11,10 @@ public class BloodShooterScript : MonoBehaviour
     [SerializeField] Transform _bulletSpawn;
 
 
-    [SerializeField] float _timebetweenBullets = 2f;
-    [SerializeField] float _moveSpeed = 2f;
+    [SerializeField] float _timebetweenBullets = 2f; //how often to fire bullets
+    [SerializeField] float _moveSpeed = 2f; //how fast the bullet travels
 
-    private float _bulletCounter = 2f;
+    private float _bulletCounter = 2f; //counter to count when to fire next bullet
 
     void Update()
     {
@@ -32,12 +32,6 @@ public class BloodShooterScript : MonoBehaviour
         }
         _bulletCounter += Time.deltaTime;
     }
-     void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Enemy")
-        {
-            col.gameObject.GetComponent<EnemyMovementScript>().StopMovement();
-        }
-    }
+    
     
 }

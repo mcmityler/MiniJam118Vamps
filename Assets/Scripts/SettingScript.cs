@@ -10,7 +10,7 @@ public class SettingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("escape"))
+        if (Input.GetKeyDown("p") || Input.GetKeyDown("escape"))
         {
             TogglePaused();
         }
@@ -35,8 +35,9 @@ public class SettingScript : MonoBehaviour
     }
     public void QuitGame(){
         FindObjectOfType<AudioManager>().Play("ButtonClick");
-
+        if(Application.platform != RuntimePlatform.WebGLPlayer){
         Application.Quit();
+        }
             print("Quit the game");
 
     }

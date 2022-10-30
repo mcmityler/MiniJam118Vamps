@@ -73,9 +73,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d56d7eb2b2ce0f749856d523861cb045, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 92897f0eb9bb31a4dba2f129c0e81ccc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: -8828526415493116014}
   - component: {fileID: 756441428670608349}
   m_Layer: 2
-  m_Name: VampireBasic
+  m_Name: VampireTank
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580d25de4b3f5dc409369ae1e0f8fcb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _vampireHealth: 3
+  _vampireHealth: 5
   _fangValue: 2
   _fangPickup: {fileID: 7607808390823713457, guid: 1fab4cf332211f34c8899dcd993ea236, type: 3}
   _VampireHit: {fileID: -8828526415493116014}
@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 0.5
   _moveDirection: {x: -1, y: 0, z: 0}
+  _damageAmount: 2
   _TimeToAttack: 0.1
 --- !u!82 &-8828526415493116014
 AudioSource:
